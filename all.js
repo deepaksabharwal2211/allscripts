@@ -102,7 +102,67 @@ $(window).scroll(function() {
                 /*$(window).scrollTop() returns the position of the top of the page, and $(document).height() 
                 returns the position of the bottom of the page.
                 Therefore you need to subtract the height of the window to get the position to compare against, 
-                as this will give you the position where the top of the page would be if you were fully scrolled to the bottom.
-                }*/
+                as this will give you the position where the top of the page would be if you were fully scrolled to the bottom.*/
+                }
                 //alert('i am at bottom')
-            })
+            });
+
+//form validation basic
+function isValidEmailAddress(emailAddress) {
+    var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+    return pattern.test(emailAddress);
+}
+function formValidate() {
+    var em = $('.group input[type="email"]').val();
+    var pswrd = $('.group input[type="password"]').val();
+    if (em != 0 && !isValidEmailAddress(em)) {
+        //console.log(isValidEmailAddress(em));
+        $('#valem').fadeIn();
+        //$('.group input[type="email"]').parent().addClass('shake');
+    }
+ else if (em.length == 0) {
+     $('#emreq').fadeIn();
+
+    }
+    else if (pswrd.length == 0) {
+        $('#passreq').fadeIn();
+
+    }
+}
+function formValidateSend() {
+    var email = $('.forgotpass_field .group input[type="email"]').val();
+    if (email != 0 && !isValidEmailAddress(email)) {
+        $('#valem2').fadeIn();
+    }
+    else if (email.length == 0) {
+        $('#emreq2').fadeIn();
+
+    }
+}
+$('#formcheck').on('click', function () {
+    formValidate();
+});
+
+//ripple effect
+$(function () {
+    var ink, d, x, y;
+    $(".ripplelink").on('mouseenter click',function (e) {
+        if ($(this).find(".ink").length === 0) {
+            $(this).prepend("<span class='ink'></span>");
+        }
+
+        ink = $(this).find(".ink");
+        ink.removeClass("animate");
+
+        if (!ink.height() && !ink.width()) {
+            d = Math.max($(this).outerWidth(), $(this).outerHeight());
+            ink.css({ height: d, width: d });
+        }
+
+        x = e.pageX - $(this).offset().left - ink.width() / 2;
+        y = e.pageY - $(this).offset().top - ink.height() / 2;
+
+        ink.css({ top: y + 'px', left: x + 'px' }).addClass("animate");
+    });
+});
+
